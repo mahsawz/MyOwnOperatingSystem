@@ -5,7 +5,7 @@
 	ASPARAMS = --32
 	LDPARAMS = -melf_i386
 	
-	objects = loader.o gdt.o kernel.o
+	objects = loader.o gdt.o port.o kernel.o
 	
 	
 	
@@ -40,4 +40,6 @@
 	install: mykernel.bin
 		sudo cp $< /boot/mykernel.bin
 		
-	
+	.PHONY: clean
+	clean:
+		rm -f $(objects) mykernel.bin mykernel.iso
