@@ -5,9 +5,12 @@
 	ASPARAMS = --32
 	LDPARAMS = -melf_i386
 	
-	objects = loader.o gdt.o port.o kernel.o
+	objects = loader.o gdt.o port.o interruptstubs.o interrupts.o kernel.o
 	
 	
+	run: mykernel.iso
+		(killall VirtualBox && sleep 1) || true
+		VirtualBox --startvm 'My Operating System' &
 	
 	%.o: %.cpp
 		gcc $(GCCPARAMS) -c -o $@ $<
@@ -32,10 +35,6 @@
 		echo '}'                                 >> iso/boot/grub/grub.cfg
 		grub-mkrescue --output=mykernel.iso iso
 		rm -rf iso
-	
-	run: mykernel.iso
-		(killall VirtualBox && sleep 1) || true
-		VirtualBox --startvm 'My Operating System' &
 	
 	install: mykernel.bin
 		sudo cp $< /boot/mykernel.bin
