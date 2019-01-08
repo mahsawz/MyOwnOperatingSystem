@@ -1,6 +1,7 @@
     #include "types.h"
     #include "gdt.h"
     #include "interrupts.h"
+   #include "keyboard.h"
    
     void printf(char* str)
 	{
@@ -57,6 +58,7 @@
 	    printf("Hello World! --- http://www.AlgorithMan.de");
 	    GlobalDescriptorTable gdt;
 	    InterruptManager interrupts(0x20, &gdt);
+	    KeyboardDriver keyboard(&interrupts);
 	    interrupts.Activate();
 	
 	    while(1);
